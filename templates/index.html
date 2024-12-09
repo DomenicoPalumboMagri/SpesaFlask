@@ -1,25 +1,127 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista della Spesa</title>
+    <style>
+        /* Reset di margini e padding per evitare comportamenti strani nei vari browser */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Stile di base della pagina */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+        /* Lista della spesa */
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #fff;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Pulsante rimuovi */
+        button {
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #e60000;
+        }
+
+        /* Modulo di aggiunta elemento */
+        form {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        button[type="submit"] {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        /* Svuota la lista */
+        .svuota-btn {
+            background-color: #007BFF;
+            padding: 10px 20px;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .svuota-btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Messaggio quando la lista è vuota */
+        p {
+            text-align: center;
+            color: #888;
+        }
+    </style>
 </head>
 <body>
     <h1>La tua Lista della Spesa</h1>
-    {% if lista %}
+    {% if lista_spesa %}
     <ul>
-        {% for elemento in lista %}
+        {% for item in lista_spesa %}
         <li>
-            {{ elemento }}
-            <form action="/rimuovi/{{ loop.index0 }}" method="post" style="display:inline;">
+            {{ item.elemento }}  <!-- Mostra il nome dell'elemento -->
+            <form action="/rimuovi/{{ item.id }}" method="post" style="display:inline;">
                 <button type="submit">Rimuovi</button>
             </form>
         </li>
         {% endfor %}
     </ul>
     <form action="/svuota" method="post">
-        <button type="submit" style="margin-top: 10px;">Svuota la lista</button>
+        <button type="submit" class="svuota-btn">Svuota la lista</button>
     </form>
     {% else %}
     <p>La lista è vuota.</p>
